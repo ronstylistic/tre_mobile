@@ -2,21 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:tre_app/constant.dart';
 import 'package:tre_app/tab/settings.dart';
 
-import 'custom/app_bar.dart';
-import 'tab/home.dart';
-import 'tab/notifications.dart';
+import '../custom/app_bar.dart';
+import 'notifications.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class HomeScreenTab extends StatefulWidget {
+  const HomeScreenTab({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeScreenTab> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreenTab> {
   int _selectedIndex = 0;
-  static final List<Widget> _widgetOptions = <Widget>[
-    Home(),
+  static List<Widget> _widgetOptions = <Widget>[
     Notifications(),
     Settings()
   ];

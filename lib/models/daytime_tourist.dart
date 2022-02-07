@@ -7,10 +7,10 @@ class DaytimeTouristsModel {
   String? provinceFemale;
   String? otherProvinceMale;
   String? otherProvinceFemale;
-  int? countAgeA;
-  int? countAgeB;
-  int? countAgeC;
-  int? countAgeD;
+  String? countAgeA;
+  String? countAgeB;
+  String? countAgeC;
+  String? countAgeD;
   List<Residences>? fCountryResidence;
 
   DaytimeTouristsModel({
@@ -26,4 +26,19 @@ class DaytimeTouristsModel {
     this.countAgeD,
     this.fCountryResidence
   });
+
+  factory DaytimeTouristsModel.fromJson(Map<String, dynamic> json) {
+    return DaytimeTouristsModel(
+      id: json['id'],
+      month: json['month'],
+      provinceMale: json['provinceMale'],
+      provinceFemale: json['provinceFemale'],
+      otherProvinceMale: json['otherProvinceMale'],
+      otherProvinceFemale: json['otherProvinceFemale'],
+      countAgeA: json['countAgeA'],
+      countAgeB: json['countAgeB'],
+      countAgeC: json['countAgeC'],
+      countAgeD: json['countAgeD'],
+    );
+  }
 }

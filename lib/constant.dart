@@ -8,3 +8,6 @@ const customPadding = 20.0;
 
 List<String> months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
 'August', 'September', 'October', 'November', 'December'];
+
+List<String> categories = ['Category 1', 'Category 2'];
+List<String> roles = ['Admin', 'User'];

@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tre_app/login.dart';
+import 'package:tre_app/splash.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
-  runApp(GetMaterialApp(
-    home: Login(),
-    debugShowCheckedModeBanner: false));
+void main() async{
+  await GetStorage.init();
+  runApp(const MyApp());
 }
 
-/*class MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      theme: ThemeData(
-        textTheme: Theme.of(context).textTheme.apply(bodyColor: customTextColor),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      title: "Flutter Demo",
+      /*theme: ThemeData(
+        primarySwatch: Colors.green,
+      ),*/
+      home: SplashView(),
       debugShowCheckedModeBanner: false,
-      home: const HomeScreen(),
     );
   }
-}*/
+}
 
 

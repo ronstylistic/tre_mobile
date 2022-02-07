@@ -26,3 +26,11 @@ List<Menu> userMenus = [
   Menu(id: 5, text: "Inbound"),
   Menu(id: 6, text: "Tour Operators"),
 ];
+
+List<Menu> reportMenus = [
+  Menu(id: 1, text: "Overnight Guests"),
+  Menu(id: 2, text: "Daytime Tourist"),
+  Menu(id: 3, text: "MICE"),
+  Menu(id: 4, text: "Inbound"),
+  Menu(id: 5, text: "Tour Operators"),
+];

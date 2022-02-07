@@ -10,4 +10,13 @@ class Residences {
     required this.male,
     required this.female,
   });
+
+  factory Residences.fromJson(Map<String, dynamic> json) {
+    return Residences(
+      id: json['id'],
+      country: json['country'],
+      male: json['male'],
+      female: json['female']
+    );
+  }
 }

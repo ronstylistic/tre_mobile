@@ -7,9 +7,9 @@ import 'package:tre_app/models/non_philippines_res.dart';
 
 import '../../constant.dart';
 
-class OvernightGuestsReport extends StatelessWidget {
+class OvernightGuests extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  OvernightGuestsReport({Key? key}) : super(key: key);
+  OvernightGuests({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

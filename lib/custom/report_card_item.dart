@@ -3,17 +3,16 @@ import 'package:tre_app/constant.dart';
 import 'package:tre_app/models/menu.dart';
 import 'package:tre_app/screens/account.dart';
 import 'package:get/get.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:tre_app/screens/reports/daytime_tourists_report.dart';
 import 'package:tre_app/screens/tre/daytime_tourists.dart';
 import 'package:tre_app/screens/tre/inbound.dart';
 import 'package:tre_app/screens/tre/mice.dart';
 import 'package:tre_app/screens/tre/overnight_guests.dart';
-import 'package:tre_app/screens/tre/tour_operators.dart';
 
-class UserCardItem extends StatelessWidget {
+class ReportCardItem extends StatelessWidget {
   final Menu menu;
 
-  const UserCardItem({
+  const ReportCardItem({
     Key? key,
     required this.menu,
   }) : super(key: key);
@@ -24,22 +23,19 @@ class UserCardItem extends StatelessWidget {
       onTap: (){
         switch(menu.id){
           case 1:
-            Get.to(() => Account(title: menu.text));
+            Get.to(() => DaytimeTouristsReport());
             break;
           case 2:
-            Get.to(() => OvernightGuests());
+            Get.to(() => DaytimeTouristsReport());
             break;
           case 3:
-            Get.to(() => DaytimeTourists());
+            Get.to(() => DaytimeTouristsReport());
             break;
           case 4:
-            Get.to(() => Mice());
+            Get.to(() => DaytimeTouristsReport());
             break;
           case 5:
-            Get.to(() => Inbound());
-            break;
-          case 6:
-            Get.to(() => TourOperators());
+            Get.to(() => DaytimeTouristsReport());
             break;
           default:
             break;
@@ -57,20 +53,13 @@ class UserCardItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              if(menu.image != null)
-                Expanded(
-                  child: Padding(
-                      padding: const EdgeInsets.all(customPadding / 2),
-                      child: SvgPicture.asset(menu.image ?? "", color: customTextColor)
-                  ),
-                ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: customPadding / 4),
                 child: Text(
                   // products is out demo list
                   menu.text,
                   style: const TextStyle(color: customTextDarkColor,
-                  fontSize: 16, fontWeight: FontWeight.bold),
+                      fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
             ]

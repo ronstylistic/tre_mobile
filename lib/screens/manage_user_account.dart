@@ -1,44 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:tre_app/constant.dart';
+import 'package:tre_app/controller/user_controller.dart';
 import 'package:tre_app/custom/app_bar.dart';
 import 'package:tre_app/models/user.dart';
 import 'package:tre_app/screens/add_user.dart';
+import 'package:get/get.dart';
 
 class ManageUserAccount extends StatelessWidget {
-  final String title;
-  const ManageUserAccount({
-    Key? key,
-    required this.title
-  }) : super(key: key);
+  final UserController userController = Get.put(UserController());
+  ManageUserAccount({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: buildAppBar(title),
+      appBar: buildAppBar("User Account"),
       body: SafeArea(
-        child: users.isNotEmpty ?
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: users.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final item = users[index];
-                    //return makeCard(item);
-                    return Dismissible(
-                        key: Key(item.id.toString()),
-                        onDismissed: (direction) {
-                          // Then show a snackbar.
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(SnackBar(content: Text('$item dismissed')));
-                        },
-                        child: makeCard(item)
-                    );
+        child: Obx(() {
+          if(userController.isLoading.value) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return SingleChildScrollView(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: userController.users.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final item = userController.users[index];
+                  return Dismissible(
+                      key: Key(item.id.toString()),
+                      onDismissed: (direction) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(content: Text('$item dismissed')));
+                      },
+                      child: makeCard(item)
+                  );
                 },
-          ) : const Center(
-              child: Text('No Users',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              )
-        ),
+              ),
+            );
+          }
+        })
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -51,7 +51,7 @@ class ManageUserAccount extends StatelessWidget {
     );
   }
 
-  Card makeCard(User user){
+  Card makeCard(UserModel user){
     return Card(
       elevation: 0,
       margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 1.0),
@@ -62,7 +62,7 @@ class ManageUserAccount extends StatelessWidget {
     );
   }
 
-  ListTile makeListTile(User user){
+  ListTile makeListTile(UserModel user){
     return ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         leading: Container(
@@ -80,7 +80,7 @@ class ManageUserAccount extends StatelessWidget {
         ),
         subtitle: Row(
           children: <Widget>[
-            Text(user.email,
+            Text(user.email ?? "",
                 style: const TextStyle(color: customTextLightColor)
             ),
           ],
@@ -93,7 +93,7 @@ class ManageUserAccount extends StatelessWidget {
 
 Route _createRoute() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const AddUser(),
+    pageBuilder: (context, animation, secondaryAnimation) => AddUser(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0.0, 1.0);
       const end = Offset.zero;

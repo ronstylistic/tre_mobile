@@ -1,27 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:tre_app/constant.dart';
+import 'package:tre_app/controller/tre_controller.dart';
 import 'package:tre_app/custom/app_bar.dart';
 import 'package:tre_app/custom/row_item.dart';
 import 'package:tre_app/models/tre.dart';
 import 'package:tre_app/screens/add_tre.dart';
+import 'package:get/get.dart';
 
 class ManageTre extends StatelessWidget {
-  final String title;
-  const ManageTre({
-    Key? key,
-    required this.title
-  }) : super(key: key);
-
+  final TreController _treController = Get.put(TreController());
+  ManageTre({ Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(title),
+      appBar: buildAppBar("Manage TREs"),
       body: SafeArea(
-        child: tres.isNotEmpty ?
+        child: Obx(() {
+          if(_treController.isLoading.value) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            return SingleChildScrollView(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: _treController.tres.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final item = _treController.tres[index];
+                  return Dismissible(
+                      key: Key(item.id.toString()),
+                      onDismissed: (direction) {
+                        Get.snackbar("Success", '$item dismissed');
+                      },
+                      child: makeCard(item)
+                  );
+                },
+              ),
+            );
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: _treController.tres.length,
+              itemBuilder: (BuildContext context, int index) {
+                final item = _treController.tres[index];
+                return Dismissible(
+                    key: Key(item.id.toString()),
+                    onDismissed: (direction) {
+                      Get.snackbar("Success", '$item dismissed');
+                    },
+                    child: makeCard(item)
+                );
+              },
+            );
+          }
+        })
+        /*child: _treController.tres.isNotEmpty ?
         ListView.builder(
           shrinkWrap: true,
-          itemCount: tres.length,
+          itemCount: _treController.tres.length,
           itemBuilder: (BuildContext context, int index) {
             return makeCard(tres[index]);
           },
@@ -29,7 +63,7 @@ class ManageTre extends StatelessWidget {
             child: Text("No TRE's",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             )
-        ),
+        ),*/
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -45,7 +79,7 @@ class ManageTre extends StatelessWidget {
 
 Route _createRoute() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const AddTre(),
+    pageBuilder: (context, animation, secondaryAnimation) => AddTre(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(0.0, 1.0);
       const end = Offset.zero;
@@ -61,7 +95,7 @@ Route _createRoute() {
   );
 }
 
-Card makeCard(Tre tre){
+Card makeCard(TreModel tre){
   return Card(
     elevation: 0,
     margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 1.0),
@@ -72,7 +106,7 @@ Card makeCard(Tre tre){
   );
 }
 
-ListTile makeListTile(Tre tre){
+ListTile makeListTile(TreModel tre){
   return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       leading: Container(
@@ -85,7 +119,7 @@ ListTile makeListTile(Tre tre){
           backgroundImage: AssetImage("assets/images/user.png"),
         ),
       ),
-      title: Text(tre.businessName,
+      title: Text(tre.businessName ?? "",
         style: const TextStyle(color: customTextLightColor, fontWeight: FontWeight.bold),
       ),
       subtitle: Column(

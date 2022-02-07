@@ -1,19 +1,37 @@
-class User {
-  final String firstname;
-  final String lastname;
-  final String username;
-  final String email;
-  final int id;
-  User({
-    required this.id,
-    required this.firstname,
-    required this.lastname,
-    required this.username,
-    required this.email
+class UserModel {
+  String? firstname;
+  String? lastname;
+  String? company;
+  String? email;
+  String? role;
+  String? id;
+  UserModel({
+    this.id,
+    this.firstname,
+    this.lastname,
+    this.company,
+    this.email,
+    this.role,
   });
-}
 
-List<User> users = [
-  User(id: 1, firstname: "Ronnel", lastname: "Bedana", username: "user1", email: "ronnel@gmail.com"),
-  User(id: 2, firstname: "Kenetox", lastname: "Sibayan", username: "user2", email: "ronnel2@gmail.com")
-];
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+    id: json['id'],
+    firstname: json['firstname'],
+    lastname: json['lastname'],
+    company: json['company'],
+    email: json['email'],
+    role: json['role']
+  );
+
+  Map<String, dynamic> toJson() => {
+    'firstname': firstname,
+    'lastname': lastname,
+    'company': company,
+    'email': email,
+    'role': role,
+  };
+
+  bool isAdmin() {
+    return role == 'Admin';
+  }
+}

@@ -9,6 +9,7 @@ import 'package:tre_app/screens/manage_database.dart';
 import 'package:tre_app/screens/manage_tre.dart';
 import 'package:tre_app/screens/manage_user_account.dart';
 import 'package:tre_app/screens/reports.dart';
+import 'package:tre_app/screens/generate_report.dart';
 
 class CardItem extends StatelessWidget {
   final Menu menu;
@@ -27,13 +28,13 @@ class CardItem extends StatelessWidget {
             Get.to(() => Account(title: menu.text));
             break;
           case 2:
-            Get.to(() => ManageUserAccount(title: menu.text));
+            Get.to(() => ManageUserAccount());
             break;
           case 3:
-            Get.to(() => ManageTre(title: menu.text));
+            Get.to(() => ManageTre());
             break;
           case 4:
-            Get.to(() => Reports(title: menu.text));
+            Get.to(() => GenerateReport());
             break;
           case 5:
             Get.to(() => ManageDatabase(title: menu.text));

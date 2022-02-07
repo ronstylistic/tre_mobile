@@ -1,25 +1,45 @@
-class Tre {
-  final String category;
-  final String businessName;
-  final String contactPerson;
-  final String address;
-  final String contactNumber;
-  final String email;
-  final String? website;
-  final int id;
-  Tre({
-    required this.id,
-    required this.category,
-    required this.businessName,
-    required this.contactPerson,
-    required this.address,
-    required this.contactNumber,
-    required this.email,
+class TreModel {
+  String? category;
+  String? businessName;
+  String? contactPerson;
+  String? address;
+  String? contactNumber;
+  String? email;
+  String? website;
+  String? otherInfo;
+  String? id;
+  TreModel({
+    this.id,
+    this.category,
+    this.businessName,
+    this.contactPerson,
+    this.address,
+    this.contactNumber,
+    this.email,
     this.website,
+    this.otherInfo
   });
-}
 
-List<Tre> tres = [
-  Tre(id: 1, category: "Category 1", businessName: "Green Leaf Hotel", contactPerson: "Ronnel Bedana", contactNumber: "09124717494", email: "ronnel@gmail.com", website: "www.website.com", address: 'Address 1'),
-  Tre(id: 2, category: "Category 2", businessName: "Hotel", contactPerson: "Ronnel Bedana", contactNumber: "09124717494", email: "ronnel@gmail.com", website: "www.website.com", address: 'Address 1')
-];
+  Map<String, dynamic> toJson() => {
+    'category': category,
+    'businessName': businessName,
+    'contactPerson': contactPerson,
+    'address': address,
+    'contactNumber': contactNumber,
+    'email': email,
+    'website': website,
+    'otherInfo': otherInfo
+  };
+
+  factory TreModel.fromJson(Map<String, dynamic> json) => TreModel(
+      id: json['id'],
+      category: json['category'],
+      businessName: json['businessName'],
+      contactPerson: json['contactPerson'],
+      address: "",
+      contactNumber: json['contactNumber'],
+      email: json['email'],
+      website: json['website'],
+      otherInfo: json['otherInfo']
+  );
+}

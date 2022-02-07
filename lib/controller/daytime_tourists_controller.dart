@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
+import 'package:tre_app/helper/session.dart';
+import 'dart:convert';
 import 'package:tre_app/models/daytime_tourist.dart';
 import 'package:tre_app/models/residences.dart';
 import 'package:uuid/uuid.dart';
@@ -38,13 +40,12 @@ class DaytimeTouristController extends GetxController {
     daytimeTouristModel.provinceFemale = provinceFemale.text;
     daytimeTouristModel.otherProvinceMale = otherProvinceMale.text;
     daytimeTouristModel.otherProvinceFemale = otherProvinceFemale.text;
-    daytimeTouristModel.countAgeA = int.parse(ageA.text);
-    daytimeTouristModel.countAgeB = int.parse(ageB.text);
-    daytimeTouristModel.countAgeC = int.parse(ageC.text);
-    daytimeTouristModel.countAgeD = int.parse(ageD.text);
+    daytimeTouristModel.countAgeA = ageA.text;
+    daytimeTouristModel.countAgeB = ageB.text;
+    daytimeTouristModel.countAgeC = ageC.text;
+    daytimeTouristModel.countAgeD = ageD.text;
 
     var json = {
-      'id': daytimeTouristModel.id,
       'month': daytimeTouristModel.month,
       'provinceMale': daytimeTouristModel.provinceMale,
       'provinceFemale': daytimeTouristModel.provinceFemale,
@@ -57,11 +58,14 @@ class DaytimeTouristController extends GetxController {
       'residences': mapResidence()
     };
 
+    print(json);
     try{
+      print("sending..");
       String url = "http://tre.rcjsolutions.com/api/daytime_tourists";
-      var response = await post(Uri.parse(url), body: json);
-      print(response);
+       http.Response response = await http.post(Uri.parse(url), body: jsonEncode(json), headers: headers);
+        print(jsonDecode(response.body));
     }catch(e){
+      e.printError();
     }
   }
 
@@ -69,10 +73,8 @@ class DaytimeTouristController extends GetxController {
     List<Map<String, dynamic>> json = [];
 
     if(_residences.isNotEmpty){
-      for(int i = 0; i < _residences.length; i++){
-        json.add(
-          { 'country': _residences[i].country, 'male': _residences[i].male, 'female': _residences[i].female }
-        );
+      for (var data in _residences) {
+        json.add({'country': data.country, 'male': data.male, 'female': data.female });
       }
     }
 
