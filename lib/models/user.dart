@@ -30,8 +30,4 @@ class UserModel {
     'email': email,
     'role': role,
   };
-
-  bool isAdmin() {
-    return role == 'Admin';
-  }
 }

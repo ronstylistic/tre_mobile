@@ -9,7 +9,6 @@ class TreService extends GetConnect {
 
   Future<TreModel?> addTre(TreModel model) async {
     final response = await post(url + "/tre", model.toJson());
-    print(response.body);
     if (response.statusCode == HttpStatus.ok) {
       var json = response.body;
       model.id = json["data"];

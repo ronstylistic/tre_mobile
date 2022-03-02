@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tre_app/auth/auth_manager.dart';
 import 'package:tre_app/home.dart';
 import 'package:tre_app/login.dart';
+import 'package:tre_app/models/menu.dart';
 import 'package:tre_app/models/user.dart';
 
 class OnBoard extends StatelessWidget {
@@ -11,9 +12,8 @@ class OnBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthManager _authManager = Get.find();
-    UserModel? user = _authManager.getUser();
     return Obx(() {
-      return _authManager.isLogged.value ? HomeScreen(userModel: user) : Login();
+      return _authManager.isLogged.value ? HomeScreen() : Login();
     });
   }
 }

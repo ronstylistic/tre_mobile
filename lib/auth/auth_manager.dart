@@ -1,11 +1,13 @@
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get/get.dart';
+import 'package:tre_app/models/menu.dart';
 import 'package:tre_app/models/user.dart';
 
 import 'cache_manager.dart';
 
 class AuthManager extends GetxController with CacheManager {
   final isLogged = false.obs;
+  var homeMenu = <Menu>[].obs;
 
   void logOut() {
     isLogged.value = false;
@@ -14,6 +16,10 @@ class AuthManager extends GetxController with CacheManager {
 
   void login(String? token, UserModel? user) async {
     isLogged.value = true;
+    if(user != null){
+      homeMenu.value = user.role == "Admin" ? menus : userMenus;
+    }
+
     //Token is cached
     await saveToken(token, user);
   }
@@ -22,6 +28,7 @@ class AuthManager extends GetxController with CacheManager {
     final token = getToken();
     if (token != null) {
       isLogged.value = true;
+      homeMenu.value = isAdmin() ? menus: userMenus;
     }
   }
 
@@ -31,6 +38,6 @@ class AuthManager extends GetxController with CacheManager {
       return user.role == "Admin";
     }
 
-    return true;
+    return false;
   }
 }
